@@ -1,0 +1,19 @@
+{
+  "name": "n2i2016",
+  "version": "1.0.0",
+  "description": "bot nuit info 2016",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://git.htag.fr/htag/AI.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "botbuilder": "^3.4.4",
+    "restify": "^4.3.0"
+  }
+}
