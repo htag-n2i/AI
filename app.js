@@ -1,9 +1,22 @@
+//=========================================================
+// Used libraries
+//=========================================================
+
+var express = require('express');
+var i18n = require("i18n");
 var restify = require('restify');
 var builder = require('botbuilder');
 
 //=========================================================
-// Bot Setup
+// Setup
 //=========================================================
+
+// Language setup 
+i18n.configure({
+    locales:['ar', 'en', 'fr'],
+    directory: __dirname + '/locales',
+    register: global
+});
 
 // Setup Restify Server
 var server = restify.createServer();
@@ -23,31 +36,9 @@ server.post('/api/messages', connector.listen());
 // Bots Dialogs
 //=========================================================
 
-bot.dialog('/', [
-    function (session) {
-        // Prompt the user to select their preferred locale
-        builder.Prompts.choice(session, "What's your preferred language?", 'English|Español|Italiano');
-    },
-    function (session, results) {
-        // Update preferred locale
-        var locale;
-        switch (results.response.entity) {
-            case 'English':
-                locale = 'en';
-            case 'Español':
-                locale = 'es';
-            case 'Italiano':
-                locale = 'it';
-                break;
-        }
-        session.preferredLocale(locale, function (err) {
-            if (!err) {
-                // Locale files loaded
-                session.endDialog("Your preferred language is now %s.", results.response.entity);
-            } else {
-                // Problem loading the selected locale
-                session.error(err);
-            }
-        });
-    }
-]);
+require('./dialog/index.js').index(bot);
+require('./dialog/askLanguage.js').askLanguage(bot, builder, i18n);
+require('./dialog/askWho.js').askWho(bot, builder, i18n);
+require('./dialog/askInfo.js').askInfo(bot, builder, i18n);
+
+
