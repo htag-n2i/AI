@@ -32,11 +32,18 @@ var connector = new builder.ChatConnector({
 var bot = new builder.UniversalBot(connector);
 server.post('/api/messages', connector.listen());
 
+// Integration with LUIS
+var url = 'https://api.projectoxford.ai/luis/v2.0/apps/6ff965de-303e-4adf-9ca1-0e26f49ba0b5?subscription-key=67350f7ea4984696b5aadd2df5177f35&verbose=true';
+var recognizer = new builder.LuisRecognizer(url); // URL du modèle LUIS, LOOK ICI ARNAUD
+var intents = new builder.IntentDialog({ recognizers: [recognizer] });
+
+bot.dialog('/', intents);
+
 //=========================================================
 // Bots Dialogs
 //=========================================================
 
-require('./dialog/index.js').index(bot);
+require('./dialog/index.js').index(bot, intents);
 require('./dialog/askLanguage.js').askLanguage(bot, builder, i18n);
 require('./dialog/askWho.js').askWho(bot, builder, i18n);
 require('./dialog/askInfo.js').askInfo(bot, builder, i18n);

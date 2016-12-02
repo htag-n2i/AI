@@ -1,10 +1,14 @@
-function index(bot)
+function index(bot, intents)
 {
-    bot.dialog('/', [
-        function (session) {
-            session.beginDialog('/askLanguage');
-        }
-    ]);
+    // bot.dialog('/', intents, [
+    //     function (session) {
+    //         session.beginDialog('/askLanguage');
+    //     }
+    // ]);
+
+    intents.onBegin(function (session) {
+        session.beginDialog('/askLanguage');
+    });
 }
 
 module.exports.index = index;
