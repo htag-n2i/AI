@@ -1,0 +1,9 @@
+deploy:
+  script: deployer ai master
+  only:
+    - master
+
+deploy_develop:
+  script: deployer ai develop
+  only:
+    - develop
